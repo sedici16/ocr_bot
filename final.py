@@ -11,6 +11,14 @@ from telegram.ext.callbackcontext import CallbackContext
 from telegram.utils.helpers import escape_markdown
 from huggingface_hub import InferenceClient
 from gradio_client import Client, handle_file
+from dotenv import load_dotenv
+
+
+from pathlib import Path
+
+
+env_path = Path(__file__).resolve().parent / ".env"
+load_dotenv(dotenv_path=env_path)
 
 # Load Hugging Face token from environment variable
 HF_TOKEN = os.getenv("HF_TOKEN")
@@ -21,9 +29,11 @@ ocr_client = Client("theoracle/easyocr-api", hf_token=HF_TOKEN)
 # Connect to Hugging Face chat completion API (LLM)
 client = InferenceClient(provider="novita", api_key=HF_TOKEN)
 
+
 # Enable logging
 logging.basicConfig(level=logging.INFO)
 
+#not used
 def preprocess_image(pil_image: Image.Image) -> Image.Image:
     """
     Optional: Convert a PIL image to black-and-white using adaptive thresholding.
